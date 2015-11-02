@@ -140,6 +140,14 @@ Typed.Boolean = Typed("Boolean", value =>
   value === false ? false :
   TypeError(`"${value}" is not a boolean`))
 
+Typed.Date = Typed("Date", value => {
+  if (Object.prototype.toString.call(value) === "[object Date]") {
+    return value
+  } else if (typeof(value) === "string") {
+    return new Date(value)
+  }
+  return TypeError(`"${value}" is not a date or string`)})
+
 class MaybeType extends Type {
   constructor(type) {
     super()
@@ -226,7 +234,7 @@ const union = (xs, ys) => {
   else {
     const diff = subtract(xs, ys)
     return diff.length === 0 ? ys : diff.concat(ys)
-  }
+  }d
 }
 
 export const Union = (...Types) => {
